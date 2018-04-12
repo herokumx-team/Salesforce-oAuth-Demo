@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
+var cors = require('cors');
 
 // setup dotenv for local dev
 require('dotenv').config();
@@ -24,6 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 /* setup middleware to use for the app */
+app.use(cors());
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(helmet());
 app.use(logger('dev'));

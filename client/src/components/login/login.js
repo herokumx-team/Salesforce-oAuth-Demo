@@ -5,7 +5,9 @@
 * asellers@salesforce.com
 * 12th April 2018 */
 
-import { MuiThemeProvider, AppBar, RaisedButton, TextField } from 'material-ui';
+import React, { Component } from 'react';
+import { MuiThemeProvider, AppBar, RaisedButton } from 'material-ui';
+import axios from 'axios';
 
 // now we build the component
 export default class Login extends Component {
@@ -16,17 +18,38 @@ export default class Login extends Component {
     }
   };
 
+  // function to handle the login click
+  handleClick(event) {
+    //do nothing for the moment
+    console.log('click!');
+    const clientId = process.env.REACT_APP_CLIENTID;
+    console.log('clientID is: ' + clientId);
+    // setup the vars for the auth
+    const clientSecret = process.env.REACT_APP_CLIENTSECRET;
+    const callbackUrl = process.env.REACT_APP_CALLBACKURL;
+    const tokenUrl = 'http://localhost:3001/login';
+
+    // use the vars above to redirect to login service
+    axios.get(tokenUrl)
+      .then(res => {
+        console.log('got something back: ' + JSON.stringify(res));
+      });
+  }
+
   // render the component
   render() {
     return (
       <div>
         <MuiThemeProvider>
-          <RaisedButton
-            label="Login"
-            primary={true}
-            style={style}
-            onClick={(event) => this.handleClick(event)}
-          />
+          <div>
+            <AppBar title="Login Button" />
+            <RaisedButton
+              label="Login"
+              primary={true}
+              style={style}
+              onClick={(event) => this.handleClick(event)}
+            />
+          </div>
         </MuiThemeProvider>
       </div>
     );
@@ -34,5 +57,6 @@ export default class Login extends Component {
 }
 // setup the styles
 const style = {
-  margin: 15
+  margin: 15,
+  padding: 15
 };
